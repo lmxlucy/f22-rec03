@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 public class IntQueueTest {
 
-    private IntQueue mQueue;
+    private ArrayIntQueue mQueue;
     private List<Integer> testList;
 
     /**
@@ -33,7 +33,7 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
 //        mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
@@ -78,6 +78,7 @@ public class IntQueueTest {
             assertEquals(testList.get(i), mQueue.dequeue());
             assertEquals(testList.size() - i - 1, mQueue.size());
         }
+        assertNull(mQueue.dequeue());
     }
 
     @Test
@@ -100,5 +101,24 @@ public class IntQueueTest {
         }
     }
 
+    @Test
+    public void testClear() {
+        for (int i = 0; i < testList.size(); i++) {
+            mQueue.enqueue(testList.get(i));
+        }
+        mQueue.clear();
+        assertEquals(mQueue.size(), 0);
+    }
+
+    @Test
+    public void testEnsureCapacity() {
+        for (int i = 0; i < 11; i++) {
+            mQueue.enqueue(i);
+        }
+        for (Integer i = 0; i < 11; i++) {
+            assertEquals(mQueue.dequeue(), i);
+        }
+        
+    }
 
 }
